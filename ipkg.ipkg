@@ -1,0 +1,20 @@
+-- SPDX-FileCopyrightText: 2021 The ipkg-idr developers
+--
+-- SPDX-License-Identifier: CC0-1.0
+
+package ipkg-test
+
+depends = contrib
+
+version = "0.1.0"
+
+readme = "README.md"
+
+modules =
+    Language.IPKG,
+    Language.IPKG.Lexer,
+    Language.IPKG.Parser,
+    Language.IPKG.Tokens,
+    Language.IPKG.Value
+
+sourcedir = "src"
