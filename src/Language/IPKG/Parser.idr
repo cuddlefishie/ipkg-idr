@@ -30,15 +30,12 @@ bare = match ITBare
 
 private
 moduleIdent : Grammar IPKGToken True ModuleIdent
-moduleIdent = do
-    x <- sepBy1' (punct Dot) bare
-    pure $ case x of
-            (s :: rest ** _) => s ::: rest
+moduleIdent = sepBy1 (punct Dot) bare
 
 private
 keyEq : Key -> Grammar IPKGToken True ()
 keyEq k = do
-    match (ITKey k)
+    k' <- match (ITKey k)
     commit
     punct Equal
     pure ()
@@ -66,8 +63,8 @@ field p =
     <|> keyVal KSourceLoc string (\s => { sourceloc := Just s } p)
     <|> keyVal KBugtracker string (\s => { bugtracker := Just s } p)
 
-    <|> keyVal KDepends (sepBy1 (punct Comma) bare) (\m => { depends := m } p)
-    <|> keyVal KModules (sepBy1 (punct Comma) moduleIdent) (\m => { modules := m } p)
+    <|> keyVal KDepends (sepBy1 (punct Comma) bare) (\m => { depends := forget m } p)
+    <|> keyVal KModules (sepBy1 (punct Comma) moduleIdent) (\m => { modules := forget m } p)
 
     <|> keyVal KMainMod moduleIdent (\s => { mainmod := Just s } p)
     

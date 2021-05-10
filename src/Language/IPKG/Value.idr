@@ -20,7 +20,7 @@ public export
 record PkgDesc where
     constructor MkPkgDesc
     name        : Identifier
-    version     : String
+    version     : String -- TODO should be a proper type
     authors     : String
     maintainers : Maybe String
     license     : Maybe String
